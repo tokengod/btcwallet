@@ -502,6 +502,7 @@ func loadConfig() (*config, []string, error) {
 		return nil, nil, err
 	}
 	if cfg.DisableClientTLS {
+		/* ben disable tls
 		if _, ok := localhostListeners[RPCHost]; !ok {
 			str := "%s: the --noclienttls option may not be used " +
 				"when connecting RPC to non localhost " +
@@ -511,6 +512,7 @@ func loadConfig() (*config, []string, error) {
 			fmt.Fprintln(os.Stderr, usageMessage)
 			return nil, nil, err
 		}
+		*/
 	} else {
 		// If CAFile is unset, choose either the copy or local btcd cert.
 		if !cfg.CAFile.ExplicitlySet() {
@@ -597,7 +599,7 @@ func loadConfig() (*config, []string, error) {
 		allListeners := append(cfg.LegacyRPCListeners,
 			cfg.ExperimentalRPCListeners...)
 		for _, addr := range allListeners {
-			host, _, err := net.SplitHostPort(addr)
+			_, _, err := net.SplitHostPort(addr)
 			if err != nil {
 				str := "%s: RPC listen interface '%s' is " +
 					"invalid: %v"
@@ -606,6 +608,7 @@ func loadConfig() (*config, []string, error) {
 				fmt.Fprintln(os.Stderr, usageMessage)
 				return nil, nil, err
 			}
+			/* ben disable server tls
 			if _, ok := localhostListeners[host]; !ok {
 				str := "%s: the --noservertls option may not be used " +
 					"when binding RPC to non localhost " +
@@ -615,6 +618,7 @@ func loadConfig() (*config, []string, error) {
 				fmt.Fprintln(os.Stderr, usageMessage)
 				return nil, nil, err
 			}
+			*/
 		}
 	}
 
